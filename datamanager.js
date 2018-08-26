@@ -1,5 +1,5 @@
 global.userdata = {
-    path: "user",
+    path: "data/user",
     pathTo: function(id){return `${this.path}/${id}.json`},
     create: function(id) {
         fs.writeFileSync(this.pathTo(id), "{}");
