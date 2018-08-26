@@ -40,21 +40,6 @@ commands.help = {
 };
 
 
-
-
-/*
-fs.readdir('commands', (err, fileNames) => {
-	fileNames.forEach(fileName => {
-		if (fileName.startsWith('~') || !fileName.endsWith('js')) return;
-		fs.readFile('commands/'+fileName, 'utf8', (err, data) => {
-			if (err) return console.error(colors.red(err));
-			try {eval(data)} catch(e) {console.error(`Invalid command ${fileName}: ${e}`.red)}
-		});
-	});
-});*/
-
-
-
 client.on("message", function(message){
     if (!message.content.startsWith("!")) return;
 
