@@ -1,5 +1,6 @@
 {
     "dependencies": {
+        "colors": "^1.3.2",
         "convert-css-color-name-to-hex": "^0.1.1",
         "discord.js": "github:hydrabolt/discord.js#31873eb3a5133a1ed161c110ccb0b99ca5cd6390"
     }
