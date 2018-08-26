@@ -1,1 +1,0 @@
-This is the Discord bot for the TERRIUM Community Discord server. It originated as my first Discord bot, created in June 2017. Music and Fishing features were added, before being separated to their own bots. Since February 2018 it is no longer actively developed because of other priorities. It has been left in a bit of a transitional phase… I was attempting some refactoring.
