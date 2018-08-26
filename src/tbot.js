@@ -33,7 +33,6 @@ require('./datamanager.js')
 require('./rolemanager.js')
 require('./general-commands.js')
 require('./misc.js')
-require('./bridges.js')
 require('./bots.js')
 
 
