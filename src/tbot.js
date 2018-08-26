@@ -1,6 +1,5 @@
-process.on('uncaughtException', console.error);
-process.on('unhandledRejection', (reason, promise) => {
-	console.error(promise);
+process.on('unhandledRejection', (error) => {
+	console.error(error.stack);
 });
 
 global.Discord = require('discord.js');
@@ -9,7 +8,7 @@ global.colors = require('colors');
 
 global.client = new Discord.Client({disableEveryone:true});
 client.on('warn', console.warn);
-client.on('error', console.error);
+client.on('error', error => console.error(error.stack));
 
 global.config = require('./config.json');
 client.login(config.token);
