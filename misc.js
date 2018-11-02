@@ -55,10 +55,10 @@ client.on('message', message => {
 
 // Magic voice text channel
 client.on('voiceStateUpdate', async (oldState, newState) => {
-    if (oldState.channelID != config.channels.voiceChatText && newState.channelID == config.channels.voiceChatText) {
+    if (oldState.channelID != config.channels.voiceChat && newState.channelID == config.channels.voiceChat) {
         // member joined the channel
         client.channels.get(config.channels.voiceChatText).overwritePermissions(newState.member, {'READ_MESSAGES': true});
-    } else if (oldState.channelID == config.channels.voiceChatText && newState.channelID != config.channels.voiceChatText) {
+    } else if (oldState.channelID == config.channels.voiceChat && newState.channelID != config.channels.voiceChat) {
         // member left the channel
         client.channels.get(config.channels.voiceChatText).overwritePermissions(newState.member, {'READ_MESSAGES': false});
     }
