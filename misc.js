@@ -57,9 +57,9 @@ client.on('message', message => {
 client.on('voiceStateUpdate', async (oldState, newState) => {
     if (oldState.channelID != config.channels.voiceChat && newState.channelID == config.channels.voiceChat) {
         // member joined the channel
-        client.channels.get(config.channels.voiceChatText).overwritePermissions({permissionOverwrites:{id:newState.id,allow:['READ_MESSAGES']}});
+        client.channels.get(config.channels.voiceChatText).overwritePermissions({permissionOverwrites:[{id:newState.id,allow:['READ_MESSAGES']}]});
     } else if (oldState.channelID == config.channels.voiceChat && newState.channelID != config.channels.voiceChat) {
         // member left the channel
-        client.channels.get(config.channels.voiceChatText).overwritePermissions({permissionOverwrites:{id:newState.id,deny:['READ_MESSAGES']}});
+        client.channels.get(config.channels.voiceChatText).overwritePermissions({permissionOverwrites:[{id:newState.id,deny:['READ_MESSAGES']}]});
     }
 });
