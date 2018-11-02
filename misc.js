@@ -54,13 +54,12 @@ client.on('message', message => {
 
 
 // Magic voice text channel
-client.on('voiceStateUpdate', (oldMember, newMember) => {
-	let oldIsInVoice = (oldMember.voiceChannel && oldMember.voiceChannel.id === config.channels.voiceChat) || false;
-	let newIsInVoice = (newMember.voiceChannel && newMember.voiceChannel.id === config.channels.voiceChat) || false;
-	if (newIsInVoice && !oldIsInVoice) {
-		client.channels.get(config.channels.voiceChatText).overwritePermissions(newMember, {'READ_MESSAGES': true});
-	}
-	if (oldIsInVoice && !newIsInVoice) {
-		client.channels.get(config.channels.voiceChatText).overwritePermissions(newMember, {'READ_MESSAGES': false});
-	}
+client.on('voiceStateUpdate', async (oldState, newState) => {
+    if (oldState.channelID != config.channels.voiceChatText && newState.channelID == config.channels.voiceChatText) {
+        // member joined the channel
+        client.channels.get(config.channels.voiceChatText).overwritePermissions(newState.member, {'READ_MESSAGES': true});
+    } else if (oldState.channelID == config.channels.voiceChatText && newState.channelID != config.channels.voiceChatText) {
+        // member left the channel
+        client.channels.get(config.channels.voiceChatText).overwritePermissions(newState.member, {'READ_MESSAGES': false});
+    }
 });
