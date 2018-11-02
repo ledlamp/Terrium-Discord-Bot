@@ -54,7 +54,7 @@ client.on('message', message => {
 
 
 // Magic voice text channel
-client.on('voiceStateUpdate', async (oldState, newState) => {
+/*client.on('voiceStateUpdate', async (oldState, newState) => {
     if (oldState.channelID != config.channels.voiceChat && newState.channelID == config.channels.voiceChat) {
         // member joined the channel
         client.channels.get(config.channels.voiceChatText).overwritePermissions({permissionOverwrites:[{id:newState.id,allow:['VIEW_CHANNEL']}]});
@@ -62,4 +62,4 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
         // member left the channel
         client.channels.get(config.channels.voiceChatText).overwritePermissions({permissionOverwrites:[{id:newState.id,deny:['VIEW_CHANNEL']}]});
     }
-});
+});*/
