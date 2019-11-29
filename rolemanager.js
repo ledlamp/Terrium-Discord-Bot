@@ -2,15 +2,16 @@ global.roleManager = {
     permissions: require('./permissions.json'),
 
 
-    createColorRole: function(member){
-        return member.guild.roles.create({
+    createColorRole: async function(member){
+        var role = await member.guild.roles.create({
             data: {
                 name: '[]',
                 color: 'RANDOM',
                 permissions: [],
                 position: member.guild.roles.get(config.roles.colorHeader).position
             }
-        }).then(role => member.roles.add(role));
+        });
+		await member.roles.add(role);
     },
 
     getColorRole: function(member){
