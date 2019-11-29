@@ -12,6 +12,7 @@ global.roleManager = {
             }
         });
 		await member.roles.add(role);
+		return role;
     },
 
     getColorRole: function(member){
@@ -23,6 +24,16 @@ global.roleManager = {
 	purgeColorRole: async function(member){
 		var role = await this.getColorRole(member);
 		if (role && role.members.array().length == 0) role.delete();
+	},
+	
+	pruneColorRoles: function() {
+		return Promise.all(client.guilds.get(config.guild).roles.filter(r => r.name.startsWith('[')).map(r => r.delete()));
+	},
+	
+	addMissingColorRoles: async function() {
+		for (let [id, member] of client.guilds.get(config.guild).members.filter(m => this.getColorRole(m))) {
+			await this.createColorRole(member);
+		}
 	},
 
     applyPermissions: function(member, permissions){
