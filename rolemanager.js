@@ -151,7 +151,7 @@ Moderators can change others' color like so: \`!color <@281134216115257344> red\
             const selectedMember = message.mentions.members.first();
 			if (selectedMember) {
                 if (args[2]) {
-                    if (hasPermission(message.member, 2)) changeColor(message, selectedMember, txt(2));
+                    if (message.member.hasPermission("MANAGE_ROLES")) changeColor(message, selectedMember, txt(2));
                     else message.react('🚫');
                 } else message.reply(`**${selectedMember.displayName}**'s color is **${getColor(selectedMember)}**.`);
             } else changeColor(message, message.member, txt(1));
@@ -185,7 +185,7 @@ commands.title = {
         const selectedMember = message.mentions.members.first();
 		if (selectedMember) {
             if (args[2]) {
-                if (hasPermission(message.member, 2)) changeTitle(message, selectedMember, txt(2) === 'none' ? '' : txt(2));
+                if (message.member.hasPermission("MANAGE_ROLES")) changeTitle(message, selectedMember, txt(2) === 'none' ? '' : txt(2));
                 else message.react('🚫');
             } else {
                 message.reply(`**${selectedMember.displayName}**'s title is **${findColorRole(selectedMember).name.slice(1,-1)}**.`);
