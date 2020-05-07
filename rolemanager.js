@@ -8,7 +8,7 @@ global.roleManager = {
                 name: '[]',
                 color: 'RANDOM',
                 permissions: [],
-                position: member.guild.roles.get(config.roles.colorHeader).position
+                position: member.guild.roles.cache.get(config.roles.colorHeader).position
             }
         });
 		await member.roles.add(role);
@@ -16,22 +16,22 @@ global.roleManager = {
     },
 
     getColorRole: function(member){
-        return member.roles.find(role => {
+        return member.roles.cache.find(role => {
             if (role.name.startsWith('[')) return role;
         });
     },
 
 	purgeColorRole: async function(member){
 		var role = await this.getColorRole(member);
-		if (role && role.members.array().length == 0) role.delete();
+		if (role && role.members.cache.array().length == 0) role.delete();
 	},
 	
 	pruneColorRoles: function() {
-		return Promise.all(client.guilds.get(config.guild).roles.filter(r => r.name.startsWith('[')).map(r => r.delete()));
+		return Promise.all(client.guilds.cache.get(config.guild).roles.cache.filter(r => r.name.startsWith('[')).map(r => r.delete()));
 	},
 	
 	addMissingColorRoles: async function() {
-		for (let [id, member] of client.guilds.get(config.guild).members.filter(m => this.getColorRole(m))) {
+		for (let [id, member] of client.guilds.cache.get(config.guild).members.cache.filter(m => this.getColorRole(m))) {
 			await this.createColorRole(member);
 		}
 	},
@@ -69,7 +69,7 @@ client.on('guildMemberAdd', member => {
 	if (backup) {
 		if (backup.roles) {
 			for (let role of backup.roles) {
-				let existingRole = member.guild.roles.get(role.id);
+				let existingRole = member.guild.roles.cache.get(role.id);
 				if (existingRole) {
 					member.addRole(existingRole);
 				} else {
@@ -88,9 +88,9 @@ client.on('guildMemberAdd', member => {
 		// new member
 		roleManager.createColorRole(member);
 		if (member.user.bot) {
-			member.roles.add(member.guild.roles.get(config.roles.robots));
+			member.roles.add(member.guild.roles.cache.get(config.roles.robots));
 		} else {
-			member.roles.add(member.guild.roles.get(config.roles.humans));
+			member.roles.add(member.guild.roles.cache.get(config.roles.humans));
 		}
 	}
 });
@@ -104,7 +104,7 @@ client.on('guildMemberRemove', member => {
 		roles: [],
 		nickname: member.nickname
 	}
-	for (let role of member.roles.array()) {
+	for (let role of member.roles.cache.array()) {
 		if (role.id == member.guild.defaultRole.id) return;
 		backup.roles.push({
 			id: role.id,
@@ -147,8 +147,8 @@ Moderators can change others' color like so: \`!color <@281134216115257344> red\
         }
 
         if (args[1]) {
-            //const selectedMember = (args[1].startsWith('<@') && args[1].endsWith('>') && args[1].length === 21) ? myguild.members.get(args[1].substr(2,18)) : undefined;
-            const selectedMember = message.mentions.members.first();
+            //const selectedMember = (args[1].startsWith('<@') && args[1].endsWith('>') && args[1].length === 21) ? myguild.members.cache.get(args[1].substr(2,18)) : undefined;
+            const selectedMember = message.mentions.members.cache.first();
 			if (selectedMember) {
                 if (args[2]) {
                     if (message.member.hasPermission("MANAGE_ROLES")) changeColor(message, selectedMember, txt(2));
@@ -181,8 +181,8 @@ commands.title = {
         }
 
 
-        //const selectedMember = (args[1].startsWith('<@') && args[1].endsWith('>') && args[1].length === 21) ? myguild.members.get(args[1].substr(2,18)) : undefined;
-        const selectedMember = message.mentions.members.first();
+        //const selectedMember = (args[1].startsWith('<@') && args[1].endsWith('>') && args[1].length === 21) ? myguild.members.cache.get(args[1].substr(2,18)) : undefined;
+        const selectedMember = message.mentions.members.cache.first();
 		if (selectedMember) {
             if (args[2]) {
                 if (message.member.hasPermission("MANAGE_ROLES")) changeTitle(message, selectedMember, txt(2) === 'none' ? '' : txt(2));

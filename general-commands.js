@@ -35,7 +35,7 @@ commands.quote = {
     execute: function (message, args, txt) {
         if (!args[1]) return message.react('❓');
         if (args[2]) {
-            var channel = client.channels.get(args[2]);
+            var channel = client.channels.cache.get(args[2]);
             if (!channel) return message.react('⚠');
         } else var channel = message.channel;
         channel.messages.fetch(args[1]).then(m => {
@@ -103,17 +103,17 @@ commands.mute = {
     require: ["MUTE_MEMBERS"],
     execute: function (message, args, txt) {
         if (!args[1]) return message.react('❓');
-        const victim = message.mentions.members.first();
+        const victim = message.mentions.members.cache.first();
         if (!victim) return message.react('⚠');
         message.delete();
         const duration = +args[2];
         const reason = txt(duration ? 3 : 2);
-        victim.roles.remove(message.guild.roles.get(config.roles[victim.user.bot?'robots':'humans']));
-        victim.roles.add(message.guild.roles.get(config.roles.muted));
+        victim.roles.remove(message.guild.roles.cache.get(config.roles[victim.user.bot?'robots':'humans']));
+        victim.roles.add(message.guild.roles.cache.get(config.roles.muted));
         if (duration) {
             setTimeout(()=>{
-                victim.removeRole(message.guild.roles.get(config.roles.muted));
-                victim.addRole(message.guild.roles.get(config.roles[victim.user.bot?'robots':'humans']));
+                victim.removeRole(message.guild.roles.cache.get(config.roles.muted));
+                victim.addRole(message.guild.roles.cache.get(config.roles[victim.user.bot?'robots':'humans']));
             }, duration*60*1000);
         }
         message.channel.send(`🔇 **${message.member} muted ${victim}${duration ? ` for ${duration} minute${duration == 1 ? '' : 's'}.` : "."} ${reason ? `Reason: \`${reason}\`` : ""}**`);
@@ -126,11 +126,11 @@ commands.unmute = {
     require: ["MUTE_MEMBERS"],
     execute: function (message, args, txt) {
         if (!args[1]) return message.react('❓');
-        const victim = message.mentions.members.first();
+        const victim = message.mentions.members.cache.first();
         if (!victim) return message.react('⚠');
         message.delete();
-        victim.roles.remove(message.guild.roles.get(config.roles.muted));
-        victim.roles.add(message.guild.roles.get(config.roles[victim.user.bot?'robots':'humans']));
+        victim.roles.remove(message.guild.roles.cache.get(config.roles.muted));
+        victim.roles.add(message.guild.roles.cache.get(config.roles[victim.user.bot?'robots':'humans']));
         message.channel.send(`🔈 **${message.member} unmuted ${victim}.**`);
     }
 };

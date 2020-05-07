@@ -72,7 +72,7 @@ commands.bots = {
                     const client = new Discord.Client();
                     await client.login(botTokens[i]);
                     botClients.push(client);
-                    (await client.channels.get(message.channel.id).messages.fetch(message.id)).react('🆗');
+                    (await client.channels.cache.get(message.channel.id).messages.fetch(message.id)).react('🆗');
                 })();
             }
             (function(){
@@ -80,20 +80,20 @@ commands.bots = {
                 if (!client) return;
                 
                 if (args[2] === "ping") {
-                    client.channels.get(message.channel.id).send('pong');
+                    client.channels.cache.get(message.channel.id).send('pong');
                 }
                 if (args[2] === "join") {
-                    client.channels.get(message.member.voiceChannel.id).join();
+                    client.channels.cache.get(message.member.voiceChannel.id).join();
                 }
                 if (args[2] === "play") {
-                    client.channels.get(message.member.voiceChannel.id).join().then(connection => {
+                    client.channels.cache.get(message.member.voiceChannel.id).join().then(connection => {
                         connection.playFile(txt(3));
                     });
                 }
                 if (args[2] === "eval") {
                     try {var evaluation = eval(txt(3).replace(/%id/g, i))}
                     catch(e) {var evaluation = e}
-                    client.channels.get(message.channel.id).send('`'+evaluation+'`');
+                    client.channels.cache.get(message.channel.id).send('`'+evaluation+'`');
                 }
                 if (args[2] === "destroy") {
                     client.destroy();

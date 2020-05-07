@@ -38,13 +38,13 @@ global.getRandomInt = function getRandomInt(min, max) {
 }
 
 global.findColorRole = function findColorRole(member) {
-	return member.roles.find(role => {if (role.name.startsWith('[') && role.name.endsWith(']')) return role});
+	return member.roles.cache.find(role => {if (role.name.startsWith('[') && role.name.endsWith(']')) return role});
 }
 
 global.hasPermission = function hasPermission(member, value) {
 	return (
 		(member.user.id === config.op && value >= 0) ||
-		(member.roles.has(config.roles.admin) && value >= 1) ||
-		(member.roles.has(config.roles.mod) && value >= 2)
+		(member.roles.cache.has(config.roles.admin) && value >= 1) ||
+		(member.roles.cache.has(config.roles.mod) && value >= 2)
 	)
 }

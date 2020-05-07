@@ -20,7 +20,7 @@ client.login(config.token);
 
 client.once('ready', () => {
 	console.log('Ready');
-	myguild = client.guilds.get(config.guild); //todo deprecate?
+	myguild = client.guilds.cache.get(config.guild); //todo deprecate?
 
 });
 

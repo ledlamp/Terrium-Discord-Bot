@@ -56,8 +56,8 @@ client.on("message", function(message){
         if (cmd === commandName || (command.aliases && command.aliases.includes(cmd))) {
             if (command.guildOnly && !message.guild) return message.reply('🚫 **This command cannot be used in a DM.**');
 
-            if (!message.guild) message.guild = client.guilds.get(config.guild);
-            if (!message.member) message.member = client.guilds.get(config.guild).members.get(message.author.id);
+            if (!message.guild) message.guild = client.guilds.cache.get(config.guild);
+            if (!message.member) message.member = client.guilds.cache.get(config.guild).members.cache.get(message.author.id);
             if (command.op && message.author.id != config.op) return message.react('🚫');
             if (command.hasOwnProperty('restrictedTo')) { //todo deprecate
                 if (!hasPermission(message.member, command.restrictedTo)) return message.react('🚫');

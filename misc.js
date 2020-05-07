@@ -46,7 +46,7 @@ client.on('message', message => {
         else embed.fields = [{name:'Attachment:', value:att.url}];
     }
 	
-	client.channels.get(config.channels.main).send(
+	client.channels.cache.get(config.channels.main).send(
 		`***${message.member} posted an announcement***`, {embed}
 	)
 });
@@ -57,9 +57,9 @@ client.on('message', message => {
 /*client.on('voiceStateUpdate', async (oldState, newState) => {
     if (oldState.channelID != config.channels.voiceChat && newState.channelID == config.channels.voiceChat) {
         // member joined the channel
-        client.channels.get(config.channels.voiceChatText).overwritePermissions({permissionOverwrites:[{id:newState.id,allow:['VIEW_CHANNEL']}]});
+        client.channels.cache.get(config.channels.voiceChatText).overwritePermissions({permissionOverwrites:[{id:newState.id,allow:['VIEW_CHANNEL']}]});
     } else if (oldState.channelID == config.channels.voiceChat && newState.channelID != config.channels.voiceChat) {
         // member left the channel
-        client.channels.get(config.channels.voiceChatText).overwritePermissions({permissionOverwrites:[{id:newState.id,deny:['VIEW_CHANNEL']}]});
+        client.channels.cache.get(config.channels.voiceChatText).overwritePermissions({permissionOverwrites:[{id:newState.id,deny:['VIEW_CHANNEL']}]});
     }
 });*/
